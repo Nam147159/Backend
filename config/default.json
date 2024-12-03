@@ -4,18 +4,22 @@
     "SERVER_HOST": "localhost:2204",
     "DATABASE_TYPE": "POSTGRESQL",
     "DATABASE": {
-      "POSTGRESQL": {
-        "HOST": "localhost",
-        "PORT": 5432,
-        "USER": "postgres",
-        "PASSWORD": "N@mnguyen147159",
-        "DATABASE": "Spotify_Backend"
-      }
+        "POSTGRESQL": {
+            "HOST": "localhost",
+            "PORT": 5432,
+            "USER": "postgres",
+            "PASSWORD": "N@mnguyen147159",
+            "DATABASE": "Spotify_Backend"
+        }
     },
     "API": {
-      "HOST": "0.0.0.0",
-      "PORT": 2204,
-      "ROUTES": {
-      }
+        "HOST": "0.0.0.0",
+        "PORT": 2204,
+        "ROUTES": {}
+    },
+    "SPOTIFY": {
+        "CLIENT_ID": "803cfc93b4d943c7a6ccec081ba969cb",
+        "CLIENT_SECRET": "398b15eaa9254f6483cbcb9306b510e0",
+        "ACCESS_TOKEN": "BQD9ohbHlbVzQjJ-dq3oqTPH9npMb1pMxGo_0L1aRfmlUw-5aUJgznDW-ZfRL6fYrtHYb-_XKE9Zz5d8pMdPt72T0VUFoLdUJJeLIPG4bNcWAEx0cHM"
     }
-  }
+}
