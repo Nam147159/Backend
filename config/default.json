@@ -1,0 +1,21 @@
+{
+    "PROTOCOL": "http",
+    "CLIENT_HOST": "localhost:4200",
+    "SERVER_HOST": "localhost:2204",
+    "DATABASE_TYPE": "POSTGRESQL",
+    "DATABASE": {
+      "POSTGRESQL": {
+        "HOST": "localhost",
+        "PORT": 5432,
+        "USER": "postgres",
+        "PASSWORD": "N@mnguyen147159",
+        "DATABASE": "Spotify_Backend"
+      }
+    },
+    "API": {
+      "HOST": "0.0.0.0",
+      "PORT": 2204,
+      "ROUTES": {
+      }
+    }
+  }
