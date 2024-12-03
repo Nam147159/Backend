@@ -1,0 +1,23 @@
+# Đừng theo dõi thư mục node_modules
+node_modules/
+
+# Đừng theo dõi các file cache, log, tạm thời
+npm-debug.log*
+yarn-error.log*
+*.log
+*.tsbuildinfo
+!.git/info/exclude
+
+# Đừng theo dõi các file cấu hình môi trường cục bộ
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Đừng theo dõi các file IDE
+.idea
+*.iml
+*.suo
+*.cache
+*.nvim
