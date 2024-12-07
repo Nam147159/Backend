@@ -34,6 +34,8 @@ app.use(passport.session());
 app.use(express.json({limit: '100mb'}));
 app.use(express.urlencoded({extended: false}));
 
+app.use('/api/auth/register', require("./routes/registerRoute"));
+app.use('/api/auth/login', require("./routes/loginRoute"));
 app.use('/api/spotify/', require("./routes/spotifyRoute"));
 
 app.listen(config.get("API.PORT"), config.get("API.HOST"), () => {
