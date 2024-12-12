@@ -11,7 +11,8 @@ const {
     getTop100Playlists,
     getRecommendTrack,
     getTracksFromPlaylist,
-    getTracksFromAlbum
+    getTracksFromAlbum,
+    createNewPlaylist
 } = require('../controllers/spotifyController')
 
 
@@ -24,5 +25,6 @@ router.route('/recommendation/top100').get(getTop100Playlists);
 router.route('/recommendation/track').get(getRecommendTrack);
 router.route('/playlist/get/track').get(getTracksFromPlaylist);
 router.route('/album/get/track').get(getTracksFromAlbum);
+router.route('/create-playlist').post(createNewPlaylist);
 
 module.exports = router;
