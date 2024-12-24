@@ -8,8 +8,10 @@ const {
     getTracksAlbum,
     recommendation,
     getTracksPlaylist,
-    createPlaylist
-} = require('../services/spotifyService')
+    createPlaylist,
+    getToken
+} = require('../services/spotifyService');
+const SpotifyWebApi = require('spotify-web-api-node');
 
 const getAlbum = async (req, res) => {
     try {
@@ -221,6 +223,16 @@ const createNewPlaylist = async (req, res) => {
     }
 }
 
+const getAccessToken = async(req, res) => {
+    try {
+        const token = await getToken();
+        res.json({ token });
+    } catch (err) {
+        console.error('Error fetching token:', err);
+        res.status(500).send('Server error');
+    }
+}
+
 
 module.exports = {
     getAlbum,
@@ -233,5 +245,6 @@ module.exports = {
     getRecommendTrack,
     getTracksFromPlaylist,
     getTracksFromAlbum,
-    createNewPlaylist
+    createNewPlaylist,
+    getAccessToken
 }

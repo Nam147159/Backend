@@ -10,14 +10,29 @@ const spotifyApi = new SpotifyWebApi({
     redirectUri: 'http://localhost:2204/api/spotify'
 });
 
-// Danh sách scope cần thiết
+
 // const scopes = [
-//     'playlist-modify-public',    // Tạo và chỉnh sửa playlist công khai
-//     'playlist-modify-private',   // Tạo và chỉnh sửa playlist riêng tư
-//     'user-read-private',         // Đọc thông tin người dùng
-//     'user-library-read',         // Truy cập thư viện bài hát
-//     'user-library-modify'        // Thêm/xóa bài hát khỏi thư viện
-//   ];
+//     'ugc-image-upload',
+//     'user-read-playback-state',
+//     'user-modify-playback-state',
+//     'user-read-currently-playing',
+//     'streaming',
+//     'app-remote-control',
+//     'user-read-email',
+//     'user-read-private',
+//     'playlist-read-collaborative',
+//     'playlist-modify-public',
+//     'playlist-read-private',
+//     'playlist-modify-private',
+//     'user-library-modify',
+//     'user-library-read',
+//     'user-top-read',
+//     'user-read-playback-position',
+//     'user-read-recently-played',
+//     'user-follow-read',
+//     'user-follow-modify'
+    
+// ];
 // const authorizeURL = spotifyApi.createAuthorizeURL(scopes);
 // console.log('Visit this URL to authorize the app:', authorizeURL);
 
@@ -35,19 +50,17 @@ const spotifyApi = new SpotifyWebApi({
 //     console.error('Error getting tokens:', error);
 // });
 
-// const updateConfig = (access_token) => {
-//     const data = fs.readFileSync('default.json');
-//     const config = JSON.parse(data);
+const updateConfig = (access_token) => {
+    const data = fs.readFileSync('default.json');
+    const config = JSON.parse(data);
 
-//     config.SPOTIFY.ACCESS_TOKEN = access_token;
-//     fs.writeFileSync('default.json', JSON.stringify(config, null, 2));
-// }
+    config.SPOTIFY.ACCESS_TOKEN = access_token;
+    fs.writeFileSync('default.json', JSON.stringify(config, null, 2));
+}
 
-let tokenExpirationTime = 0;
-let expiresIn = 0;
 let tokenExpiryTime = null;
 
-const refreshAccessToken = async() => {
+const refreshAccessToken = async () => {
     const authHeader = 'Basic ' + Buffer.from(`${config.get(`SPOTIFY.CLIENT_ID`)}:${config.get(`SPOTIFY.CLIENT_SECRET`)}`).toString('base64');
 
     const data = new URLSearchParams();
@@ -62,12 +75,10 @@ const refreshAccessToken = async() => {
             }
         });
 
-        console.log(response);
-        
         spotifyApi.setAccessToken(response.data.access_token);
         tokenExpiryTime = Date.now() + response.data.expires_in * 1000;
         return response.data.access_token;
-        
+
     } catch (error) {
         console.error('Error refreshing access token:', error);
     }
@@ -80,38 +91,6 @@ const isAccessTokenExpired = () => {
     }
     console.log('Access token is still valid');
     return false;
-};
-
-const ensureAccessToken = async () => {
-    // Kiểm tra nếu token vẫn còn hạn
-    // if (Date.now() < tokenExpirationTime) {
-    //     return;
-    // }
-
-    // if (isAccessTokenExpired()) {
-    //     getNewAccessToken();
-    // } else {
-    //     console.log('Access token is still valid');
-    // }
-
-    // try {
-    //     console.log('Refreshing access token...');
-    //     const data = await spotifyApi.clientCredentialsGrant();
-    //     const accessToken = data.body['access_token'];
-    //     const expiresIn = data.body['expires_in'];
-
-    //     // Đặt Access Token và thời gian hết hạn
-    //     spotifyApi.setAccessToken(accessToken);
-    //     console.log('New access token:', spotifyApi.getAccessToken());
-
-    //     // Cập nhật thời gian hết hạn (trừ đi 1 phút để an toàn)
-    //     tokenExpirationTime = Date.now() + (expiresIn - 60) * 1000;
-
-    //     console.log(`Token will expire at: ${new Date(tokenExpirationTime).toISOString()}`);
-    // } catch (err) {
-    //     console.error('Error refreshing access token:', err);
-    //     throw new Error('Failed to refresh access token');
-    // }
 };
 
 const getAlbumByKey = async (albumKey) => {
@@ -266,6 +245,20 @@ const createPlaylist = async (name, description, public = false) => {
     }
 }
 
+const getToken = async () => {
+    if (isAccessTokenExpired()) {
+        await refreshAccessToken();
+    }
+    try {
+        const token = spotifyApi.getAccessToken();
+        console.log(token);
+        return token;
+    } catch (err) {
+        console.error('Error get token:', err);
+        throw err;
+    }
+}
+
 module.exports = {
     getAlbumByKey,
     getAlbums,
@@ -275,5 +268,6 @@ module.exports = {
     searchAlbum,
     getTracksPlaylist,
     getTracksAlbum,
-    createPlaylist
+    createPlaylist,
+    getToken
 }
