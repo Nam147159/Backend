@@ -66,7 +66,9 @@ const getRecommendPlaylists = async (req, res) => {
         const market = "VN"
         const data = await search(query, type, market);
         data.playlists.items.forEach(playlist => {
-            console.log(playlist.name)
+            if (playlist) {
+                console.log(playlist.name)
+            }
         })
         res.status(200).json({
             "success": true,
@@ -127,7 +129,9 @@ const getTop100Playlists = async (req, res) => {
         // const market = null;
         const data = await search(query, type, market, 50);
         data.playlists.items.forEach(playlist => {
-            console.log(playlist.name)
+            if (playlist) {
+                console.log(playlist.name);
+            }
         })
 
         res.status(200).json({
