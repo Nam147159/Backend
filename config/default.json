@@ -5,7 +5,7 @@
     "DATABASE_TYPE": "POSTGRESQL",
     "DATABASE": {
         "POSTGRESQL": {
-            "HOST": "localhost",
+            "HOST": "postgres",
             "PORT": 5432,
             "USER": "postgres",
             "PASSWORD": "N@mnguyen147159",
