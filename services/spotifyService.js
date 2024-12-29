@@ -99,7 +99,7 @@ const getAlbumByKey = async (albumKey) => {
     } // Đảm bảo có token truy cập trước khi thực hiện yêu cầu API
     try {
         const data = await spotifyApi.searchAlbums(albumKey);
-        console.log('Album information', data.body);
+        // console.log('Album information', data.body);
         return data.body;
     } catch (err) {
         console.error('Something went wrong when retrieving the album', err);
@@ -112,7 +112,7 @@ const searchAlbum = async (albumKey) => {
     } // Đảm bảo có token truy cập trước khi thực hiện yêu cầu API
     try {
         const data = await spotifyApi.searchAlbums("Albums Viet Nam phổ biến năm 2024", { type: "album", market: "VN" });
-        console.log('Album information', data.body);
+        // console.log('Album information', data.body);
         return data.body;
     } catch (err) {
         console.error('Something went wrong when retrieving the album', err);
@@ -147,7 +147,7 @@ const search = async (query, type, market, limit) => {
         url = url + `&limit=${limit}`
     }
 
-    console.log("url " + url)
+    // console.log("url " + url)
     try {
         const response = await axios.get(url, {
             headers: {
@@ -192,7 +192,7 @@ const getTracksAlbum = async (query) => {
     try {
         const data = await spotifyApi.getAlbum(query);
         const albums = data.body.tracks;
-        console.log(albums)
+        // console.log(albums)
         return albums;
     } catch (err) {
         console.error('Something went wrong when searching for album', err);
@@ -210,7 +210,7 @@ const recommendation = async () => {
     }
     try {
         const data = await spotifyApi.getRecommendations(option);
-        console.log('Album information', data);
+        // console.log('Album information', data);
         return data.body;
     } catch (err) {
         console.error('Something went wrong when retrieving the album', err);

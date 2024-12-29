@@ -19,6 +19,7 @@ const login = (req, res) => {
                 "message": "Signed in successfully.",
                 "data": [result.rows[0].user_info]
             });
+            console.log(result.rows[0].user_info);
         } else {
             res.status(400).json({
                 "success": false,
@@ -48,8 +49,8 @@ const register = (req, res) => {
         if (isDataValid.valid) {
             const db = req.app.get('db');
             console.log("Full request body:", req.body);
-            db.raw('Call prc_sign_up(:username, :email, :password, :birthday, :gender)',
-                { p_username: username, P_email: email, p_password: password, p_birthday: birthday, p_gender: gender }).then(result => {
+            db.raw('Call prc_sign_up(?, ?, ?, ?, ?)',
+                [username, email, password, birthday, gender]).then(result => {
                 res.status(200).json({
                     "success": true,
                     "message": "Signed up successfully.",

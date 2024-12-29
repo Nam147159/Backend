@@ -11,6 +11,7 @@ const {
     createPlaylist,
     getToken
 } = require('../services/spotifyService');
+const { saveNewPlaylist } = require('../controllers/databaseController');
 const SpotifyWebApi = require('spotify-web-api-node');
 
 const getAlbum = async (req, res) => {
@@ -65,11 +66,11 @@ const getRecommendPlaylists = async (req, res) => {
         const type = 'playlist';
         const market = "VN"
         const data = await search(query, type, market);
-        data.playlists.items.forEach(playlist => {
-            if (playlist) {
-                console.log(playlist.name)
-            }
-        })
+        // data.playlists.items.forEach(playlist => {
+        //     if (playlist) {
+        //         console.log(playlist.name)
+        //     }
+        // })
         res.status(200).json({
             "success": true,
             "message": "Data successfully queried from the database.",
@@ -87,9 +88,9 @@ const getRecommendArtists = async (req, res) => {
         const type = 'artist';
         const market = "VN";
         const data = await search(query, type, market);
-        data.artists.items.forEach(artist => {
-            console.log(artist.name)
-        })
+        // data.artists.items.forEach(artist => {
+        //     console.log(artist.name)
+        // })
 
         res.status(200).json({
             "success": true,
@@ -107,9 +108,9 @@ const getRecommendAlbums = async (req, res) => {
         const type = 'album';
         const market = "VN";
         const data = await search(query, type, market, 50);
-        data.albums.items.forEach(album => {
-            console.log(album.name)
-        })
+        // data.albums.items.forEach(album => {
+        //     console.log(album.name)
+        // })
 
         res.status(200).json({
             "success": true,
@@ -128,11 +129,11 @@ const getTop100Playlists = async (req, res) => {
         const market = "VN";
         // const market = null;
         const data = await search(query, type, market, 50);
-        data.playlists.items.forEach(playlist => {
-            if (playlist) {
-                console.log(playlist.name);
-            }
-        })
+        // data.playlists.items.forEach(playlist => {
+        //     if (playlist) {
+        //         console.log(playlist.name);
+        //     }
+        // })
 
         res.status(200).json({
             "success": true,
@@ -162,9 +163,9 @@ const getTracksFromPlaylist = async (req, res) => {
     try {
 
         const data = await getTracksPlaylist(req.query.playlist_id);
-        data.forEach(track => {
-            console.log("Playlist track", track)
-        })
+        // data.forEach(track => {
+        //     console.log("Playlist track", track)
+        // })
 
         res.status(200).json({
             "success": true,
@@ -180,9 +181,9 @@ const getTracksFromAlbum = async (req, res) => {
         console.log(req.query.album_id)
         const data = await getTracksAlbum(req.query.album_id);
 
-        data.items.forEach(track => {
-            console.log("album track", track)
-        })
+        // data.items.forEach(track => {
+        //     console.log("album track", track)
+        // })
 
         res.status(200).json({
             "success": true,
@@ -200,7 +201,7 @@ const createNewPlaylist = async (req, res) => {
 
         // Kiểm tra playlistName
         if (!name) {
-            name = "Default Name";
+            name = "New Playlist";
         }
 
         // Log thông tin để kiểm tra
@@ -211,6 +212,8 @@ const createNewPlaylist = async (req, res) => {
         });
 
         const playlist = await createPlaylist(name, description, public);
+
+        //await saveNewPlaylist({ body: playlist }, res);
 
         res.status(201).json({
             success: true,
