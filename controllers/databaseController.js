@@ -1,4 +1,4 @@
-const { savePlaylistToDB, getUserIDFromDB, getPlaylistsFromDB } = require('../services/databaseService');
+const { savePlaylistToDB, getUserIDFromDB, getPlaylistsFromDB, getPlaylistByIDFromDB } = require('../services/databaseService');
 
 const saveNewPlaylist = async (req, res) => {
     try {
@@ -55,8 +55,26 @@ const getPlaylists = async (req, res) => {
     }
 };
 
+const getPlaylistByID = async (req, res) => {
+    try {
+        const playlist = await getPlaylistByIDFromDB(req.query.playlistID);
+        res.status(200).json({
+            success: true,
+            playlist: playlist,
+        });
+    } catch (err) {
+        console.error('Error fetching playlist:', err);
+        res.status(500).json({
+            success: false,
+            message: 'Failed to fetch playlist',
+            error: err.message,
+        });
+    }
+};
+
 module.exports = {
     saveNewPlaylist,
     getUserID,
-    getPlaylists
+    getPlaylists,
+    getPlaylistByID
 }

@@ -54,8 +54,22 @@ const getPlaylistsFromDB = async (ownerID) => {
     }
 }
 
+const getPlaylistByIDFromDB = async (playlistID) => {
+    const query = 'SELECT * FROM playlists WHERE id = $1;';
+    const values = [playlistID];
+
+    try {
+        const result = await pool.query(query, values);
+        return result.rows[0];
+    } catch (err) {
+        console.error('Error getting playlist by ID:', err);
+        throw err;
+    }
+}
+
 module.exports = {
     savePlaylistToDB,
     getUserIDFromDB,
-    getPlaylistsFromDB
+    getPlaylistsFromDB,
+    getPlaylistByIDFromDB
 };
