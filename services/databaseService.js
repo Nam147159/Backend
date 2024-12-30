@@ -67,9 +67,23 @@ const getPlaylistByIDFromDB = async (playlistID) => {
     }
 }
 
+const changePlaylistNameInDB = async (playlistID, newName) => { 
+    const query = 'UPDATE playlists SET name = $1 WHERE id = $2 RETURNING *;';
+    const values = [newName, playlistID];
+
+    try {
+        const result = await pool.query(query, values);
+        return result.rows[0];
+    } catch (err) {
+        console.error('Error changing playlist name:', err);
+        throw err;
+    }
+}
+
 module.exports = {
     savePlaylistToDB,
     getUserIDFromDB,
     getPlaylistsFromDB,
-    getPlaylistByIDFromDB
+    getPlaylistByIDFromDB,
+    changePlaylistNameInDB
 };
