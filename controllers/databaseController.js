@@ -1,9 +1,10 @@
-const { 
-    savePlaylistToDB, 
-    getUserIDFromDB, 
-    getPlaylistsFromDB, 
+const {
+    savePlaylistToDB,
+    getUserIDFromDB,
+    getPlaylistsFromDB,
     getPlaylistByIDFromDB,
-    changePlaylistNameInDB } = require('../services/databaseService');
+    changePlaylistNameInDB,
+    addTrackToPlaylistInDB } = require('../services/databaseService');
 
 const saveNewPlaylist = async (req, res) => {
     try {
@@ -98,10 +99,32 @@ const changePlaylistName = async (req, res) => {
     }
 }
 
+const addTrackToPlaylist = async (req, res) => {
+    try {
+        const { playlistID, trackID } = req.body;
+
+        const updatedPlaylist = await addTrackToPlaylistInDB(playlistID, trackID);
+
+        res.status(200).json({
+            success: true,
+            message: 'Track added to playlist successfully',
+            data: updatedPlaylist,
+        });
+    } catch (err) {
+        console.error('Error adding track to playlist:', err);
+        res.status(500).json({
+            success: false,
+            message: 'Failed to add track to playlist',
+            error: err.message,
+        });
+    }
+}
+
 module.exports = {
     saveNewPlaylist,
     getUserID,
     getPlaylists,
     getPlaylistByID,
-    changePlaylistName
+    changePlaylistName,
+    addTrackToPlaylist
 }

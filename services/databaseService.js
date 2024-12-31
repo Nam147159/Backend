@@ -80,10 +80,24 @@ const changePlaylistNameInDB = async (playlistID, newName) => {
     }
 }
 
+const addTrackToPlaylistInDB = async (playlistID, trackID) => {
+    const query = 'INSERT INTO playlist_tracks (playlist_id, track_id) VALUES ($1, $2) RETURNING *;';
+    const values = [playlistID, trackID];
+
+    try {
+        const result = await pool.query(query, values); 
+        return result.rows[0];
+    } catch (err) {
+        console.error('Error adding track to playlist:', err);
+        throw err;
+    }
+}
+
 module.exports = {
     savePlaylistToDB,
     getUserIDFromDB,
     getPlaylistsFromDB,
     getPlaylistByIDFromDB,
-    changePlaylistNameInDB
+    changePlaylistNameInDB,
+    addTrackToPlaylistInDB
 };
