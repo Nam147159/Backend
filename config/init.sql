@@ -503,4 +503,17 @@ ALTER TABLE ONLY public.users
 -- PostgreSQL database dump complete
 --
 
+create table playlists(
+    id  text not null primary key,
+    owner_id text,
+    name text,
+    description text,
+    public boolean
+);
+
+create table playlist_tracks(
+    playlist_id text,
+    track_id text,
+    primary key(playlist_id, track_id)
+);
 
