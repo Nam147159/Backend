@@ -4,12 +4,14 @@ const {
     getAlbumByKey,
     getAlbums,
     search,
+    searchArtists,
     getRecommendationTrack,
     getTracksAlbum,
     recommendation,
     getTracksPlaylist,
     createPlaylist,
-    getToken
+    getToken,
+    getTrackByID
 } = require('../services/spotifyService');
 const { saveNewPlaylist } = require('../controllers/databaseController');
 const SpotifyWebApi = require('spotify-web-api-node');
@@ -60,12 +62,13 @@ const searchInfo = async (req, res) => {
     }
 
 }
+
 const getRecommendPlaylists = async (req, res) => {
     try {
         const query = 'mới nhất';
         const type = 'playlist';
         const market = "VN"
-        const data = await search(query, type, market);
+        const data = await search(query, type, market, 20);
         // data.playlists.items.forEach(playlist => {
         //     if (playlist) {
         //         console.log(playlist.name)
@@ -87,7 +90,7 @@ const getRecommendArtists = async (req, res) => {
         const query = 'nghệ sĩ';
         const type = 'artist';
         const market = "VN";
-        const data = await search(query, type, market);
+        const data = await search(query, type, market, 30);
         // data.artists.items.forEach(artist => {
         //     console.log(artist.name)
         // })
@@ -128,7 +131,7 @@ const getTop100Playlists = async (req, res) => {
         const type = 'playlist';
         const market = "VN";
         // const market = null;
-        const data = await search(query, type, market, 50);
+        const data = await search(query, type, market, 15);
         // data.playlists.items.forEach(playlist => {
         //     if (playlist) {
         //         console.log(playlist.name);
@@ -240,6 +243,19 @@ const getAccessToken = async(req, res) => {
     }
 }
 
+const getTrack = async(req, res) => {
+    try {
+        const trackID = req.query.trackID;
+        const track = await getTrackByID(trackID);
+        if (track) {
+            res.status(200).json({ "success": true, "message": "Get track successfully", "data": track })
+        } else {
+            res.status(200).json({ "failed": false, "message": "Track not found", "data": [] });
+        }
+    } catch (e) {
+        res.status(200).json({ "failed": false, "message": "Error getting track", "data": [] });
+    }
+}
 
 module.exports = {
     getAlbum,
@@ -253,5 +269,6 @@ module.exports = {
     getTracksFromPlaylist,
     getTracksFromAlbum,
     createNewPlaylist,
-    getAccessToken
+    getAccessToken,
+    getTrack
 }

@@ -31,7 +31,7 @@ const spotifyApi = new SpotifyWebApi({
 //     'user-read-recently-played',
 //     'user-follow-read',
 //     'user-follow-modify'
-    
+
 // ];
 // const authorizeURL = spotifyApi.createAuthorizeURL(scopes);
 // console.log('Visit this URL to authorize the app:', authorizeURL);
@@ -259,6 +259,18 @@ const getToken = async () => {
     }
 }
 
+const getTrackByID = async (trackID) => {
+    if (isAccessTokenExpired()) {
+        await refreshAccessToken();
+    }
+    try {
+        const data = await spotifyApi.getTrack(trackID);
+        return data.body;
+    } catch (err) {
+        console.error('Something went wrong when retrieving the track', err);
+    }
+};
+
 module.exports = {
     getAlbumByKey,
     getAlbums,
@@ -269,5 +281,6 @@ module.exports = {
     getTracksPlaylist,
     getTracksAlbum,
     createPlaylist,
-    getToken
+    getToken,
+    getTrackByID
 }
