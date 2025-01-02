@@ -14,7 +14,8 @@ const {
     getTracksFromAlbum,
     createNewPlaylist,
     getAccessToken,
-    getTrack
+    getTrack,
+    getTrackByArtist
 } = require('../controllers/spotifyController')
 
 
@@ -30,5 +31,6 @@ router.route('/album/get/track').get(getTracksFromAlbum);
 router.route('/create-playlist').post(createNewPlaylist);
 router.route('/get-access-token').get(getAccessToken);
 router.route('/get-track').get(getTrack);
+router.route('/artist/get-top-tracks').get(getTrackByArtist);
 
 module.exports = router;

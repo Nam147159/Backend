@@ -11,7 +11,8 @@ const {
     getTracksPlaylist,
     createPlaylist,
     getToken,
-    getTrackByID
+    getTrackByID,
+    getArtistTopTrack
 } = require('../services/spotifyService');
 const { saveNewPlaylist } = require('../controllers/databaseController');
 const SpotifyWebApi = require('spotify-web-api-node');
@@ -52,7 +53,7 @@ const searchInfo = async (req, res) => {
             res.status(200).json({
                 "success": true,
                 "message": "Data successfully queried from the database.",
-                "data": data.albums.items
+                "data": data
             })
         } else {
             res.status(200).json({ "success": false, "message": "Table PLANS is not found!", "data": [] });
@@ -257,6 +258,20 @@ const getTrack = async(req, res) => {
     }
 }
 
+const getTrackByArtist = async(req, res) => {
+    try {
+        const artistID = req.query.artistID;
+        const track = await getArtistTopTrack(artistID);
+        if (track) {
+            res.status(200).json({ "success": true, "message": "Get track successfully", "data": track })
+        } else {
+            res.status(200).json({ "failed": false, "message": "Track not found", "data": [] });
+        }
+    } catch (e) {
+        res.status(200).json({ "failed": false, "message": "Error getting track", "data": [] });
+    }
+}
+
 module.exports = {
     getAlbum,
     getAlbumss,
@@ -270,5 +285,6 @@ module.exports = {
     getTracksFromAlbum,
     createNewPlaylist,
     getAccessToken,
-    getTrack
+    getTrack,
+    getTrackByArtist
 }

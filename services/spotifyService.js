@@ -271,6 +271,18 @@ const getTrackByID = async (trackID) => {
     }
 };
 
+const getArtistTopTrack = async (artistID) => {
+    if (isAccessTokenExpired()) {
+        await refreshAccessToken();
+    }
+    try {
+        const data = await spotifyApi.getArtistTopTracks(artistID, 'VN');
+        return data.body;
+    } catch (err) {
+        console.error('Something went wrong when retrieving the track', err);
+    }
+}
+
 module.exports = {
     getAlbumByKey,
     getAlbums,
@@ -282,5 +294,6 @@ module.exports = {
     getTracksAlbum,
     createPlaylist,
     getToken,
-    getTrackByID
+    getTrackByID,
+    getArtistTopTrack
 }
