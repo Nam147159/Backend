@@ -18,6 +18,20 @@ SET xmloption = content;
 SET client_min_messages = warning;
 SET row_security = off;
 
+create table public.playlists(
+    id  text not null primary key,
+    owner_id text,
+    name text,
+    description text,
+    public boolean
+);
+
+create table public.playlist_tracks(
+    playlist_id text,
+    track_id text
+);
+
+
 --
 -- TOC entry 223 (class 1255 OID 16429)
 -- Name: crypt(text, text); Type: FUNCTION; Schema: public; Owner: admin
@@ -502,18 +516,3 @@ ALTER TABLE ONLY public.users
 --
 -- PostgreSQL database dump complete
 --
-
-create table playlists(
-    id  text not null primary key,
-    owner_id text,
-    name text,
-    description text,
-    public boolean
-);
-
-create table playlist_tracks(
-    playlist_id text,
-    track_id text,
-    primary key(playlist_id, track_id)
-);
-

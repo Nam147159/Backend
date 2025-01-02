@@ -287,5 +287,6 @@ module.exports = {
     createNewPlaylist,
     getAccessToken,
     getTrack,
-    getTrackByArtist
+    getTrackByArtist,
+    getAccessToken
 }
