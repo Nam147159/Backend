@@ -93,11 +93,25 @@ const addTrackToPlaylistInDB = async (playlistID, trackID) => {
     }
 }
 
+const getTracksInPlaylistInDB = async (playlistID) => {
+    const query = 'SELECT track_id FROM playlist_tracks WHERE playlist_id = $1;';
+    const values = [playlistID];
+
+    try {
+        const result = await pool.query(query, values);
+        return result.rows;
+    } catch (err) {
+        console.error('Error getting tracks in playlist:', err);
+        throw err;
+    }
+}
+
 module.exports = {
     savePlaylistToDB,
     getUserIDFromDB,
     getPlaylistsFromDB,
     getPlaylistByIDFromDB,
     changePlaylistNameInDB,
-    addTrackToPlaylistInDB
+    addTrackToPlaylistInDB,
+    getTracksInPlaylistInDB
 };

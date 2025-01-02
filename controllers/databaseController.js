@@ -1,10 +1,12 @@
+const { get } = require('config');
 const {
     savePlaylistToDB,
     getUserIDFromDB,
     getPlaylistsFromDB,
     getPlaylistByIDFromDB,
     changePlaylistNameInDB,
-    addTrackToPlaylistInDB } = require('../services/databaseService');
+    addTrackToPlaylistInDB,
+    getTracksInPlaylistInDB } = require('../services/databaseService');
 
 const saveNewPlaylist = async (req, res) => {
     try {
@@ -120,11 +122,32 @@ const addTrackToPlaylist = async (req, res) => {
     }
 }
 
+const getTracksInPlaylist = async (req, res) => {
+    try {
+        const playlistID = req.query.playlistID;
+        console.log('Requested playlist ID:', playlistID);
+        const tracks = await getTracksInPlaylistInDB(playlistID);
+        console.log('Tracks found:', tracks);
+        res.status(200).json({
+            success: true,
+            tracks: tracks,
+        });
+    } catch (err) {
+        console.error('Error fetching tracks in playlist:', err);
+        res.status(500).json({
+            success: false,
+            message: 'Failed to fetch tracks in playlist',
+            error: err.message,
+        });
+    }
+}
+
 module.exports = {
     saveNewPlaylist,
     getUserID,
     getPlaylists,
     getPlaylistByID,
     changePlaylistName,
-    addTrackToPlaylist
+    addTrackToPlaylist,
+    getTracksInPlaylist
 }
