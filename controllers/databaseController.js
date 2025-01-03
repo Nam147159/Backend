@@ -6,7 +6,8 @@ const {
     getPlaylistByIDFromDB,
     changePlaylistNameInDB,
     addTrackToPlaylistInDB,
-    getTracksInPlaylistInDB } = require('../services/databaseService');
+    getTracksInPlaylistInDB,
+    deleteTrackInPlaylistInDB } = require('../services/databaseService');
 
 const saveNewPlaylist = async (req, res) => {
     try {
@@ -142,6 +143,34 @@ const getTracksInPlaylist = async (req, res) => {
     }
 }
 
+const deleteTrackInPlaylist = async (req, res) => {
+    try {
+        const { playlistID, trackID } = req.body;
+
+        if (!playlistID || !trackID) {
+            return res.status(400).json({
+                success: false,
+                message: 'Playlist ID and Track ID are required in request body'
+            });
+        }
+
+        const result = await deleteTrackInPlaylistInDB(playlistID, trackID);
+
+        res.status(200).json({
+            success: true,
+            message: 'Track deleted from playlist successfully',
+            data: result,
+        });
+    } catch (err) {
+        console.error('Error deleting track from playlist:', err);
+        res.status(500).json({
+            success: false,
+            message: 'Failed to delete track from playlist',
+            error: err.message,
+        });
+    }
+}
+
 module.exports = {
     saveNewPlaylist,
     getUserID,
@@ -149,5 +178,6 @@ module.exports = {
     getPlaylistByID,
     changePlaylistName,
     addTrackToPlaylist,
-    getTracksInPlaylist
+    getTracksInPlaylist,
+    deleteTrackInPlaylist
 }

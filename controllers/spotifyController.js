@@ -49,6 +49,7 @@ const getAlbumss = async (req, res) => {
 const searchInfo = async (req, res) => {
     try {
         const data = await search(req.query.info);
+        console.log(data);
         if (data) {
             res.status(200).json({
                 "success": true,

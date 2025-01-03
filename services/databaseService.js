@@ -106,6 +106,18 @@ const getTracksInPlaylistInDB = async (playlistID) => {
     }
 }
 
+const deleteTrackInPlaylistInDB = async (playlistID, trackID) => {
+    const query = 'DELETE FROM playlist_tracks WHERE playlist_id = $1 AND track_id = $2;';
+    const values = [playlistID, trackID];
+
+    try {
+        await pool.query(query, values);
+    } catch (err) {
+        console.error('Error deleting track in playlist:', err);
+        throw err;
+    }
+}
+
 module.exports = {
     savePlaylistToDB,
     getUserIDFromDB,
@@ -113,5 +125,6 @@ module.exports = {
     getPlaylistByIDFromDB,
     changePlaylistNameInDB,
     addTrackToPlaylistInDB,
-    getTracksInPlaylistInDB
+    getTracksInPlaylistInDB,
+    deleteTrackInPlaylistInDB
 };
