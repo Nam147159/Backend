@@ -21,13 +21,20 @@
 
 ### Hướng dẫn cài đặt
 
-1. Cài đặt dependencies:
+1. Clone repository:
+
+   ```bash
+   git clone https://github.com/Nam147159/Backend
+   cd Backend
+   ```
+
+2. Cài đặt dependencies:
 
    ```bash
    npm install
    ```
    
-2. Khởi động server:   
+3. Khởi động server:   
 
    ```bash
    npm start
@@ -45,9 +52,24 @@
    ```
 
 2. Xây dựng và chạy container với Docker Compose:
-
+   
    ```bash
-   docker compose -f .\compose.yaml up --build
+   docker run --rm -d -p 5432:5432 -e "POSTGRES_USER=postgres" -e "POSTGRES_PASSWORD=N@mnguyen147159" -e "POSTGRES_DB=Spotify_Backend" --name spotify-postgres postgres:16.
+   docker exec -it spotify-postgres psql --user postgres                                                                                   
    ```
 
-3. Kiểm tra ứng dụng: Truy cập http://localhost:2204 để kiểm tra API hoạt động.
+   - Copy paste nội dung file Spotify.sql vào
+
+3. Cài đặt dependencies:
+
+   ```bash
+   npm install
+   ```
+   
+4. Khởi động server:   
+
+   ```bash
+   npm start
+   ```
+
+5. Kiểm tra ứng dụng: Truy cập http://localhost:2204 để kiểm tra API hoạt động.
