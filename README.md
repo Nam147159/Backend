@@ -47,4 +47,4 @@
    docker compose -f .\compose.yaml up --build
    ```
 
-3. Kiểm tra ứng dụng: Truy cập http://localhost:2240 để kiểm tra API hoạt động.
+3. Kiểm tra ứng dụng: Truy cập http://localhost:2204 để kiểm tra API hoạt động.
