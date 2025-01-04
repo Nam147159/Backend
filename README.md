@@ -9,7 +9,6 @@
 - **Node.js**: Nền tảng chạy JavaScript phía server.
 - **Express.js**: Framework xây dựng RESTful API.
 - **Spotify Web API**: Kết nối và lấy dữ liệu từ Spotify.
-- **JSON Web Token (JWT)**: Xác thực và quản lý phiên đăng nhập.
 - **OAuth 2.0**: Đăng nhập và phân quyền người dùng thông qua Spotify.
 - **Docker**: Đóng gói ứng dụng để triển khai linh hoạt.
 
@@ -20,17 +19,21 @@
 - Docker và Docker Compose được cài đặt trên hệ thống.
 - Spotify Developer Account (để lấy Client ID và Client Secret).
 
-### Cấu hình môi trường
+### Hướng dẫn cài đặt
 
-1. Tạo file `.env` trong thư mục gốc:
-   ```plaintext
-   PORT=3000
-   SPOTIFY_CLIENT_ID=your_spotify_client_id
-   SPOTIFY_CLIENT_SECRET=your_spotify_client_secret
-   REDIRECT_URI=http://localhost:3000/callback
-   JWT_SECRET=your_jwt_secret
+1. Cài đặt dependencies:
+
+   ```bash
+   npm install
    ```
-2. Đảm bảo bạn đã có thông tin từ Spotify Developer Dashboard để điền các giá trị SPOTIFY_CLIENT_ID và SPOTIFY_CLIENT_SECRET.
+   
+2. Khởi động server:   
+
+   ```bash
+   npm start
+   ```
+
+3. Đảm bảo bạn đã có thông tin từ Spotify Developer Dashboard để điền các giá trị SPOTIFY_CLIENT_ID và SPOTIFY_CLIENT_SECRET.
 
 ### Chạy ứng dụng với Docker
 
