@@ -51,7 +51,7 @@
    cd Backend
    ```
 
-2. Xây dựng và chạy container với Docker Compose:
+2. Xây dựng và chạy container với Docker:
    
    ```bash
    docker run --rm -d -p 5432:5432 -e "POSTGRES_USER=postgres" -e "POSTGRES_PASSWORD=N@mnguyen147159" -e "POSTGRES_DB=Spotify_Backend" --name spotify-postgres postgres:16.
