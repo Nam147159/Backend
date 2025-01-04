@@ -40,7 +40,7 @@
    npm start
    ```
 
-3. Đảm bảo bạn đã có thông tin từ Spotify Developer Dashboard để điền các giá trị SPOTIFY_CLIENT_ID và SPOTIFY_CLIENT_SECRET.
+4. Đảm bảo bạn đã có thông tin từ Spotify Developer Dashboard để điền các giá trị SPOTIFY_CLIENT_ID và SPOTIFY_CLIENT_SECRET.
 
 ### Chạy ứng dụng với Docker
 
